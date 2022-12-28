@@ -31,7 +31,6 @@ namespace minikanren
 
     using RelationHandle = std::coroutine_handle<RelationPromise>;
     using PromisePtr = std::shared_ptr<RelationPromise>;
-    using DependencyID = const RelationPromise*;
 
     class RelationPromise
     {
@@ -42,13 +41,15 @@ namespace minikanren
         void unhandled_exception();
 
         RelationHandle handle();
+        PromisePtr self()
+        {
+            return self_.lock();
+        }
 
         void setManager(inner::RelationManager &manager)
         {
             this->manager = &manager;
         }
-
-        void storeCont(std::unique_ptr<Cont<>> &&cont);
 
         void setDepth(std::size_t depth)
         {
@@ -59,9 +60,9 @@ namespace minikanren
             return depth_;
         }
 
-        DependencyID id() const
+        void setParent(PromisePtr parent)
         {
-            return this;
+            this->parent = std::move(parent);
         }
 
         void apply(const OpCond &op);
@@ -75,9 +76,10 @@ namespace minikanren
 
     private:
         inner::RelationManager *manager = nullptr;
-        std::unique_ptr<Cont<>> storedCont{};
         std::size_t depth_ = 0;
         std::optional<data::Value> result{};
+        std::weak_ptr<RelationPromise> self_{};
+        PromisePtr parent{};
     };
 
     class RelationFuture

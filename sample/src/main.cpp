@@ -36,10 +36,10 @@ namespace
     RelationFuture mult(Variable v)
     {
         co_await conde({
-            [v]()->RelationFuture{
+            [&v]()->RelationFuture{
                 co_await eq(v, 42);
             },
-            [v]()->RelationFuture{
+            [&v]()->RelationFuture{
                 co_await eq(v, 43);
             },
         });

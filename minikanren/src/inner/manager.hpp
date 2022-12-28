@@ -7,11 +7,11 @@
 #include <functional>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 #include <queue>
 #include <initializer_list>
 #include <optional>
 #include <utility>
-#include <vector>
 #include <memory>
 
 #include "minikanren/relation_coroutine.hpp"
@@ -30,19 +30,15 @@ namespace minikanren::inner
         std::optional<PromisePtr> pick();
         void schedule(PromisePtr promise);
 
-        void apply(RelationPromise &prom,
-            const OpCond &op);
-        void apply(RelationPromise &prom,
-            const OpAnd &op);
-        void apply(RelationPromise &prom,
-            const OpOr &op);
-        void apply(RelationPromise &prom,
-            PromisePtr call);
-        void finish(RelationPromise &prom);
+        void unify(const PromisePtr &prom, const Relation &relation);
+        void addAnd(const PromisePtr &prom, const std::vector<Cont<>> &conts);
+        void addOr(const PromisePtr &prom, const std::vector<Cont<>> &conts);
+        void add(const PromisePtr prom, PromisePtr call);
 
     private:
         using CandidateList = std::list<RelationCandidate>;
         using CandidateID = RelationCandidate*;
+        using DependencyID = const RelationPromise*;
 
         struct PrioritizedHandle
         {
@@ -53,6 +49,7 @@ namespace minikanren::inner
         };
 
     private:
+        void finish(RelationPromise &prom);
         CandidateID append(RelationCandidate &&cand);
         void remove(CandidateID candID);
 
@@ -63,7 +60,7 @@ namespace minikanren::inner
         void removeDependencyForCandidate(CandidateID cand, DependencyID dep);
         void removeDependencyForDependency(DependencyID dep, CandidateID cand);
 
-        PromisePtr start(Cont<> cont, std::size_t depth);
+        PromisePtr start(Cont<> cont, std::size_t depth, PromisePtr parent);
 
     private:
         CandidateList candidates;

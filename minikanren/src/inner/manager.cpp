@@ -8,12 +8,20 @@
 
 namespace minikanren::inner
 {
+    namespace
+    {
+        RelationFuture startCont(Cont<> cont)
+        {
+            co_await cont();
+        }
+    }
+
     RelationManager::RelationManager(Cont<> entry)
         :candidates(), futures(), deps()
     {
-        auto promise = start(entry, 0);
+        auto promise = start(entry, 0, {});
         auto candID = append(RelationCandidate());
-        addDependency(candID, promise->id());
+        addDependency(candID, promise.get());
         schedule(std::move(promise));
     }
 
@@ -34,25 +42,30 @@ namespace minikanren::inner
 
     std::optional<PromisePtr> RelationManager::pick()
     {
-        if(!futures.empty())
+        while(!futures.empty())
         {
             auto result = futures.top().promise;
             futures.pop();
-            return result;
+            auto iter = deps.find(result.get());
+            if(iter != end(deps) && !iter->second.empty())
+            {
+                return result;
+            }
         }
         return {};
     }
 
-    void RelationManager::apply(RelationPromise &prom,
-        const OpCond &op)
+    void RelationManager::unify(const PromisePtr &prom,
+            const Relation &relation)
     {
-        auto iter = deps.find(&prom);
+        assert(prom);
+        auto iter = deps.find(prom.get());
         if(iter != std::end(deps))
         {
             std::vector<CandidateID> invalidCandidates;
             for(auto cand : iter->second)
             {
-                cand->unify(op.relation());
+                cand->unify(relation);
                 if(!cand->valid())
                 {
                     // Removing directly is tricky because of the iterators
@@ -67,38 +80,39 @@ namespace minikanren::inner
         }
     }
 
-    void RelationManager::apply(RelationPromise &prom,
-        const OpAnd &op)
+    void RelationManager::addAnd(const PromisePtr &prom,
+        const std::vector<Cont<>> &conts)
     {
-        auto iter = deps.find(&prom);
+        assert(prom);
+        auto iter = deps.find(prom.get());
         if(iter != std::end(deps))
         {
             assert(!iter->second.empty());
-            for(const auto &cont : op.continuations())
+            for(const auto &cont : conts)
             {
-                auto contPromise = start(cont, prom.depth()+1);
+                auto contPromise = start(cont, prom->depth()+1, prom);
                 for(auto cand : iter->second)
                 {
-                    addDependency(cand, contPromise->id());
+                    addDependency(cand, contPromise.get());
                 }
                 schedule(std::move(contPromise));
             }
         }
     }
 
-    void RelationManager::apply(RelationPromise &prom,
-        const OpOr &op)
+    void RelationManager::addOr(const PromisePtr &prom,
+        const std::vector<Cont<>> &conts)
     {
-        auto iter = deps.find(&prom);
+        assert(prom);
+        auto iter = deps.find(prom.get());
         if(iter != std::end(deps))
         {
             // TODO: optimize the copy
             const auto curDeps = iter->second;
             assert(!iter->second.empty());
-            const auto &conts = op.getContinuations();
             for(std::size_t i = 1; i < conts.size(); ++i)
             {
-                auto contPromise = start(conts[i], prom.depth()+1);
+                auto contPromise = start(conts[i], prom->depth()+1, prom);
                 for(auto cand : curDeps)
                 {
                     auto newCandID = append(RelationCandidate(*cand));
@@ -110,33 +124,34 @@ namespace minikanren::inner
                             addDependency(newCandID, dep);
                         }
                     }
-                    addDependency(newCandID, contPromise->id());
+                    addDependency(newCandID, contPromise.get());
                 }
                 schedule(std::move(contPromise));
             }
             if(!conts.empty())
             {
-                auto contPromise = start(conts.front(), prom.depth()+1);
+                auto contPromise = start(conts.front(), prom->depth()+1, prom);
                 for(auto cand : curDeps)
                 {
-                    addDependency(cand, contPromise->id());
+                    addDependency(cand, contPromise.get());
                 }
                 schedule(std::move(contPromise));
             }
         }
     }
 
-    void RelationManager::apply(RelationPromise &prom,
-        PromisePtr call)
+    void RelationManager::add(const PromisePtr prom, PromisePtr call)
     {
+        assert(prom);
         call->setManager(*this);
-        call->setDepth(prom.depth()+1);
-        auto iter = deps.find(&prom);
+        call->setDepth(prom->depth()+1);
+        call->setParent(prom);
+        auto iter = deps.find(prom.get());
         if(iter != std::end(deps))
         {
             for(auto dep : iter->second)
             {
-                addDependency(dep, call->id());
+                addDependency(dep, call.get());
             }
             schedule(std::move(call));
         }
@@ -152,6 +167,8 @@ namespace minikanren::inner
         if(!promise->done())
         {
             futures.push({std::move(promise)});
+        } else {
+            finish(*promise);
         }
     }
 
@@ -239,12 +256,12 @@ namespace minikanren::inner
         }
     }
 
-    PromisePtr RelationManager::start(Cont<> cont, std::size_t depth)
+    PromisePtr RelationManager::start(Cont<> cont, std::size_t depth,
+        PromisePtr parent)
     {
-        auto cnt = std::make_unique<Cont<>>(cont);
-        auto fut = (*cnt)();
+        auto fut = startCont(std::move(cont));
         auto promise = fut.promise();
-        promise->storeCont(std::move(cnt));
+        promise->setParent(std::move(parent));
         promise->setManager(*this);
         promise->setDepth(depth);
         return promise;

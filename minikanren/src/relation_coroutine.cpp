@@ -16,13 +16,13 @@ namespace minikanren
                 promise->finish();
             }
         };
-
     }
 
     RelationFuture RelationPromise::get_return_object()
     {
-        return RelationFuture{PromisePtr(&handle().promise(),
-            RelationDeleter{})};
+        PromisePtr self(&handle().promise(), RelationDeleter{});
+        this->self_ = self;
+        return RelationFuture{std::move(self)};
     }
 
     std::suspend_always RelationPromise::initial_suspend()
@@ -43,33 +43,28 @@ namespace minikanren
         return RelationHandle::from_promise(*this);
     }
 
-    void RelationPromise::storeCont(std::unique_ptr<Cont<>> &&cont)
-    {
-        storedCont = std::move(cont);
-    }
-
     void RelationPromise::apply(const OpCond &op)
     {
         assert(manager);
-        manager->apply(*this, op);
+        manager->unify(self(), op.relation());
     }
 
     void RelationPromise::apply(const OpAnd &op)
     {
         assert(manager);
-        manager->apply(*this, op);
+        manager->addAnd(self(), op.continuations());
     }
 
     void RelationPromise::apply(const OpOr &op)
     {
         assert(manager);
-        manager->apply(*this, op);
+        manager->addOr(self(), op.getContinuations());
     }
 
     void RelationPromise::apply(PromisePtr promise)
     {
         assert(manager);
-        manager->apply(*this, std::move(promise));
+        manager->add(self(), std::move(promise));
     }
 
     void RelationPromise::run()
@@ -84,8 +79,6 @@ namespace minikanren
 
     void RelationPromise::finish()
     {
-        assert(manager);
-        manager->finish(*this);
         RelationHandle::from_promise(*this).destroy();
     }
 
