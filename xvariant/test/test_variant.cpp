@@ -2,9 +2,9 @@
 
 #include <catch2/catch.hpp>
 
-#include <xvariant/variant.hpp>
+#include <minikanrenpp/xvariant/variant.hpp>
 
-using namespace xvariant;
+using namespace minikanrenpp::xvariant;
 
 TEST_CASE("create")
 {

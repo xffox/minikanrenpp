@@ -4,10 +4,10 @@
 
 #include <catch2/catch.hpp>
 
-#include <minikanren/minikanren.hpp>
-#include <minikanren/data/list.hpp>
+#include <minikanrenpp/minikanren.hpp>
+#include <minikanrenpp/data/list.hpp>
 
-using namespace minikanren;
+using namespace minikanrenpp;
 
 namespace
 {

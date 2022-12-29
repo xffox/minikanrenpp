@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(minikanren)
+project(minikanrenpp)
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 enable_testing()
 
@@ -12,6 +15,19 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-Wall -Wextra -pedantic)
 
+configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+    "${CMAKE_CURRENT_BINARY_DIR}/miniKanrenppConfig.cmake"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/miniKanrenpp")
+
+install(EXPORT miniKanrenppTargets NAMESPACE minikanrenpp::
+    FILE "miniKanrenppConfig.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/miniKanrenpp")
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/miniKanrenppConfig.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/miniKanrenpp")
+
 add_subdirectory(xvariant)
 add_subdirectory(minikanren)
-add_subdirectory(sample)
+if(ENABLE_SAMPLE)
+    add_subdirectory(sample)
+endif()

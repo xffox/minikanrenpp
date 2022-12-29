@@ -1,5 +1,5 @@
-#ifndef MINIKANREN_RELATIONCOROUTINE_HPP
-#define MINIKANREN_RELATIONCOROUTINE_HPP
+#ifndef MINIKANRENPP_RELATIONCOROUTINE_HPP
+#define MINIKANRENPP_RELATIONCOROUTINE_HPP
 
 #include <cstddef>
 #include <optional>
@@ -9,9 +9,9 @@
 #include <cassert>
 #include <coroutine>
 
-#include "minikanren/data/value.hpp"
+#include "minikanrenpp/data/value.hpp"
 
-namespace minikanren
+namespace minikanrenpp
 {
     namespace inner
     {

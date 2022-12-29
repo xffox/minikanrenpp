@@ -1,5 +1,5 @@
-#ifndef MINIKANREN_RUN_HPP
-#define MINIKANREN_RUN_HPP
+#ifndef MINIKANRENPP_RUN_HPP
+#define MINIKANRENPP_RUN_HPP
 
 #include <cstddef>
 #include <type_traits>
@@ -8,11 +8,11 @@
 #include <utility>
 #include <memory>
 
-#include "minikanren/variable.hpp"
-#include "minikanren/relation_coroutine.hpp"
-#include "minikanren/data/value.hpp"
+#include "minikanrenpp/variable.hpp"
+#include "minikanrenpp/relation_coroutine.hpp"
+#include "minikanrenpp/data/value.hpp"
 
-namespace minikanren
+namespace minikanrenpp
 {
     namespace inner
     {

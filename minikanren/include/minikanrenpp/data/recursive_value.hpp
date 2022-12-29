@@ -1,5 +1,5 @@
-#ifndef MINIKANREN_DATA_RECURSIVEVALUE_HPP
-#define MINIKANREN_DATA_RECURSIVEVALUE_HPP
+#ifndef MINIKANRENPP_DATA_RECURSIVEVALUE_HPP
+#define MINIKANRENPP_DATA_RECURSIVEVALUE_HPP
 
 #include <ranges>
 #include <type_traits>
@@ -8,10 +8,10 @@
 #include <stdexcept>
 #include <ostream>
 
-#include "minikanren/variable.hpp"
-#include "minikanren/data/fragmentable.hpp"
+#include "minikanrenpp/variable.hpp"
+#include "minikanrenpp/data/fragmentable.hpp"
 
-namespace minikanren::data
+namespace minikanrenpp::data
 {
     class RecursiveValue
     {
@@ -75,6 +75,6 @@ namespace minikanren::data
     };
 }
 
-static_assert(minikanren::data::Fragmentable<minikanren::data::RecursiveValue>);
+static_assert(minikanrenpp::data::Fragmentable<minikanrenpp::data::RecursiveValue>);
 
 #endif

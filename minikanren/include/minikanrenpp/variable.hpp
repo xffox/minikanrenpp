@@ -1,11 +1,11 @@
-#ifndef MINIKANREN_VARIABLE_HPP
-#define MINIKANREN_VARIABLE_HPP
+#ifndef MINIKANRENPP_VARIABLE_HPP
+#define MINIKANRENPP_VARIABLE_HPP
 
 #include <cstddef>
 #include <functional>
 #include <ostream>
 
-namespace minikanren
+namespace minikanrenpp
 {
     class Variable
     {
@@ -30,9 +30,9 @@ namespace minikanren
 }
 
 template<>
-struct std::hash<minikanren::Variable>
+struct std::hash<minikanrenpp::Variable>
 {
-    std::size_t operator()(const minikanren::Variable &var) const noexcept
+    std::size_t operator()(const minikanrenpp::Variable &var) const noexcept
     {
         return std::hash<std::size_t>{}(var.id());
     }

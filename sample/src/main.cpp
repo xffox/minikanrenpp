@@ -1,15 +1,10 @@
-#include <cstddef>
 #include <string>
-#include <variant>
 #include <vector>
-#include <ranges>
 #include <iostream>
 
-#include <xvariant/variant.hpp>
-#include <minikanren/minikanren.hpp>
-#include <minikanren/data/list.hpp>
+#include <minikanrenpp/minikanren.hpp>
 
-using namespace minikanren;
+using namespace minikanrenpp;
 
 namespace
 {

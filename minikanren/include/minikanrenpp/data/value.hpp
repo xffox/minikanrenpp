@@ -1,5 +1,5 @@
-#ifndef MINIKANREN_DATA_VALUE_HPP
-#define MINIKANREN_DATA_VALUE_HPP
+#ifndef MINIKANRENPP_DATA_VALUE_HPP
+#define MINIKANRENPP_DATA_VALUE_HPP
 
 #include <concepts>
 #include <type_traits>
@@ -11,11 +11,11 @@
 #include <utility>
 #include <ostream>
 
-#include <xvariant/variant.hpp>
-#include "minikanren/variable.hpp"
-#include "minikanren/data/fragmentable.hpp"
+#include <minikanrenpp/xvariant/variant.hpp>
+#include "minikanrenpp/variable.hpp"
+#include "minikanrenpp/data/fragmentable.hpp"
 
-namespace minikanren::data
+namespace minikanrenpp::data
 {
     class UnifiableVariant;
     class UnifiableConstRefVariant;
@@ -138,7 +138,7 @@ namespace minikanren::data
     using ConstRefValue = UnifiableConstRefVariant;
 }
 
-namespace minikanren::data
+namespace minikanrenpp::data
 {
     template<template<typename> class TypedDescr,
         template<template<typename> class> class Base>

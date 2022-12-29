@@ -1,12 +1,12 @@
-#ifndef XVARIANT_TYPEDESCR_HPP
-#define XVARIANT_TYPEDESCR_HPP
+#ifndef MINIKANRENPP_XVARIANT_TYPEDESCR_HPP
+#define MINIKANRENPP_XVARIANT_TYPEDESCR_HPP
 
 #include <concepts>
 #include <type_traits>
 #include <utility>
 #include <cassert>
 
-namespace xvariant
+namespace minikanrenpp::xvariant
 {
     class Description
     {
@@ -67,8 +67,8 @@ namespace xvariant
     };
 }
 
-constexpr bool operator==(const xvariant::Description &left,
-    const xvariant::Description &right)
+constexpr bool operator==(const minikanrenpp::xvariant::Description &left,
+    const minikanrenpp::xvariant::Description &right)
 {
     return &left == &right;
 }

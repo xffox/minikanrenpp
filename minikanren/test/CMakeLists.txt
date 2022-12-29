@@ -9,7 +9,7 @@ if(Catch2_FOUND)
     file(GLOB MINIKANREN_TEST_SRCS "*.cpp")
 
     add_executable(${MINIKANREN_TEST} ${MINIKANREN_TEST_SRCS})
-    target_link_libraries(${MINIKANREN_TEST} ${MINIKANREN} Catch2::Catch2)
+    target_link_libraries(${MINIKANREN_TEST} ${MINIKANRENPP} Catch2::Catch2)
 
     catch_discover_tests(${MINIKANREN_TEST})
 endif()

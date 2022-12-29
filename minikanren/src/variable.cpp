@@ -1,8 +1,8 @@
-#include "minikanren/variable.hpp"
+#include "minikanrenpp/variable.hpp"
 
 #include "inner/id_allocator.hpp"
 
-namespace minikanren
+namespace minikanrenpp
 {
     Variable::Variable()
         :id_(inner::IDAllocator::allocate())

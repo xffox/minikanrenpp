@@ -1,10 +1,10 @@
-#ifndef MINIKANREN_INNER_IDALLOCATOR_HPP
-#define MINIKANREN_INNER_IDALLOCATOR_HPP
+#ifndef MINIKANRENPP_INNER_IDALLOCATOR_HPP
+#define MINIKANRENPP_INNER_IDALLOCATOR_HPP
 
 #include <cstddef>
 #include <atomic>
 
-namespace minikanren::inner
+namespace minikanrenpp::inner
 {
     class IDAllocator
     {

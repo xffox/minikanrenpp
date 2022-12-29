@@ -1,5 +1,5 @@
-#ifndef MINIKANREN_INNER_MANAGER_HPP
-#define MINIKANREN_INNER_MANAGER_HPP
+#ifndef MINIKANRENPP_INNER_MANAGER_HPP
+#define MINIKANRENPP_INNER_MANAGER_HPP
 
 #include <cstddef>
 #include <list>
@@ -14,11 +14,11 @@
 #include <utility>
 #include <memory>
 
-#include "minikanren/relation_coroutine.hpp"
-#include "minikanren/relation.hpp"
-#include "minikanren/operation.hpp"
+#include "minikanrenpp/relation_coroutine.hpp"
+#include "minikanrenpp/relation.hpp"
+#include "minikanrenpp/operation.hpp"
 
-namespace minikanren::inner
+namespace minikanrenpp::inner
 {
     class RelationManager
     {

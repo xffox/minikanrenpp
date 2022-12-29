@@ -1,6 +1,6 @@
-#include "minikanren/operation.hpp"
+#include "minikanrenpp/operation.hpp"
 
-namespace minikanren
+namespace minikanrenpp
 {
     OpCond eq(const data::Value &left, const data::Value &right)
     {

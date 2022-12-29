@@ -1,5 +1,5 @@
-#ifndef XVARIANT_VARIANT_H
-#define XVARIANT_VARIANT_H
+#ifndef MINIKANRENPP_XVARIANT_VARIANT_H
+#define MINIKANRENPP_XVARIANT_VARIANT_H
 
 #include <concepts>
 #include <type_traits>
@@ -8,9 +8,9 @@
 #include <cassert>
 #include <stdexcept>
 
-#include "xvariant/descr.hpp"
+#include "minikanrenpp/xvariant/descr.hpp"
 
-namespace xvariant
+namespace minikanrenpp::xvariant
 {
     template<typename T>
     using BaseTypedDescr = TypedDescription<T, Description>;

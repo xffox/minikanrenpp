@@ -1,4 +1,4 @@
-#include "minikanren/relation.hpp"
+#include "minikanrenpp/relation.hpp"
 
 #include <algorithm>
 #include <any>
@@ -9,9 +9,9 @@
 #include <stdexcept>
 #include <cassert>
 
-#include "minikanren/data/recursive_value.hpp"
+#include "minikanrenpp/data/recursive_value.hpp"
 
-namespace minikanren
+namespace minikanrenpp
 {
     namespace
     {

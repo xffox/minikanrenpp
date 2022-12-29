@@ -1,11 +1,11 @@
-#include "minikanren/run.hpp"
+#include "minikanrenpp/run.hpp"
 
 #include <utility>
 #include <cassert>
 
 #include "inner/manager.hpp"
 
-namespace minikanren
+namespace minikanrenpp
 {
     RunIterator::RunIterator(Run &run)
         :run(&run), maybeResult(this->run->advance())

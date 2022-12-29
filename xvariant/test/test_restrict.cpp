@@ -4,10 +4,10 @@
 
 #include <catch2/catch.hpp>
 
-#include <xvariant/variant.hpp>
-#include <xvariant/descr.hpp>
+#include <minikanrenpp/xvariant/variant.hpp>
+#include <minikanrenpp/xvariant/descr.hpp>
 
-using namespace xvariant;
+using namespace minikanrenpp::xvariant;
 
 namespace
 {

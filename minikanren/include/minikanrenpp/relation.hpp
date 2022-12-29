@@ -1,5 +1,5 @@
-#ifndef MINIKANREN_RELATION_HPP
-#define MINIKANREN_RELATION_HPP
+#ifndef MINIKANRENPP_RELATION_HPP
+#define MINIKANRENPP_RELATION_HPP
 
 #include <compare>
 #include <string>
@@ -13,10 +13,10 @@
 #include <memory>
 #include <ostream>
 
-#include "minikanren/variable.hpp"
-#include "minikanren/data/value.hpp"
+#include "minikanrenpp/variable.hpp"
+#include "minikanrenpp/data/value.hpp"
 
-namespace minikanren
+namespace minikanrenpp
 {
     class Relation
     {

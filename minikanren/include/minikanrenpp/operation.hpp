@@ -1,5 +1,5 @@
-#ifndef MINIKANREN_OPERATION_HPP
-#define MINIKANREN_OPERATION_HPP
+#ifndef MINIKANRENPP_OPERATION_HPP
+#define MINIKANRENPP_OPERATION_HPP
 
 #include <algorithm>
 #include <type_traits>
@@ -9,10 +9,10 @@
 #include <iterator>
 #include <utility>
 
-#include "minikanren/relation.hpp"
-#include "minikanren/relation_coroutine.hpp"
+#include "minikanrenpp/relation.hpp"
+#include "minikanrenpp/relation_coroutine.hpp"
 
-namespace minikanren
+namespace minikanrenpp
 {
     class RelationPromise;
 

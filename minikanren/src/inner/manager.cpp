@@ -6,7 +6,7 @@
 #include <iterator>
 #include <cassert>
 
-namespace minikanren::inner
+namespace minikanrenpp::inner
 {
     namespace
     {

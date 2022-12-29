@@ -1,5 +1,5 @@
-#ifndef MINIKANREN_DATA_LIST_HPP
-#define MINIKANREN_DATA_LIST_HPP
+#ifndef MINIKANRENPP_DATA_LIST_HPP
+#define MINIKANRENPP_DATA_LIST_HPP
 
 #include <algorithm>
 #include <type_traits>
@@ -10,10 +10,10 @@
 #include <iterator>
 #include <ostream>
 
-#include "minikanren/data/value.hpp"
-#include "minikanren/data/fragmentable.hpp"
+#include "minikanrenpp/data/value.hpp"
+#include "minikanrenpp/data/fragmentable.hpp"
 
-namespace minikanren::data
+namespace minikanrenpp::data
 {
     class Nil
     {
@@ -109,7 +109,7 @@ namespace minikanren::data
     }
 }
 
-static_assert(minikanren::data::Fragmentable<minikanren::data::Cons>);
-static_assert(minikanren::data::Fragmentable<minikanren::data::Nil>);
+static_assert(minikanrenpp::data::Fragmentable<minikanrenpp::data::Cons>);
+static_assert(minikanrenpp::data::Fragmentable<minikanrenpp::data::Nil>);
 
 #endif

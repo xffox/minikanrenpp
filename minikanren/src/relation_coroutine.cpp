@@ -1,11 +1,11 @@
-#include "minikanren/relation_coroutine.hpp"
+#include "minikanrenpp/relation_coroutine.hpp"
 
 #include <utility>
 #include <cassert>
 
 #include "inner/manager.hpp"
 
-namespace minikanren
+namespace minikanrenpp
 {
     namespace
     {

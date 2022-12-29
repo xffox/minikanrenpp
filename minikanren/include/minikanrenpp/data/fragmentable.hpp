@@ -1,10 +1,10 @@
-#ifndef MINIKANREN_DATA_FRAGMENTABLE_HPP
-#define MINIKANREN_DATA_FRAGMENTABLE_HPP
+#ifndef MINIKANRENPP_DATA_FRAGMENTABLE_HPP
+#define MINIKANRENPP_DATA_FRAGMENTABLE_HPP
 
 #include <ranges>
 #include <initializer_list>
 
-namespace minikanren::data
+namespace minikanrenpp::data
 {
     template<typename T>
     concept Fragmentable = std::ranges::range<T> &&
