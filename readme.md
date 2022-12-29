@@ -22,12 +22,12 @@ to be awaited (`co_await`).
 To make the solution search efficient unification should be able to look into parts of
 values (like list elements) - this is described by the `Fragmentable` concept.
 
+`minikanrenpp/minikanren.hpp` is the all-in-one header.
+
 ## Other
 
 `xvariant` is like `std::any`, but allows to restrict the stored types to fulfil
 a certain static interface.
-
-`minikanrenpp/minikanren.hpp` is the all-in-one header.
 
 # Building
 
